@@ -76,6 +76,7 @@ const schoolMenus = [
   { path: '/users', title: '账号管理', icon: 'User', minLevel: 2 },
   { path: '/classes', title: '班级管理', icon: 'Collection', minLevel: 2 },
   { path: '/teacher-job', title: '教师任职', icon: 'Avatar', minLevel: 2 },
+  { path: '/timetable', title: '课表设置', icon: 'Calendar', minLevel: 2 },
   { path: '/students', title: '学生总览', icon: 'School' },
   { path: '/teacher-apply', title: '任课更换审核', icon: 'Switch', minLevel: 2 },
   { path: '/questions', title: '题库管理', icon: 'Files' },

@@ -44,9 +44,14 @@ export const examReopen = (recordId) => request.post(`/exam/reopen/${recordId}`)
 export const studentPortrait = (studentId) => request.get(`/score/student/${studentId}/portrait`)
 export const aiPortrait = (studentId, subject) => request.post(`/score/student/${studentId}/ai`, { subject })
 
-// 任课更换
+// 课表
+export const timetableMine = () => request.get('/timetable/mine')
+
+// 任课更换/调课
 export const changeApply = (data) => request.post('/teacherchange/apply', data)
 export const changeMine = () => request.get('/teacherchange/mine')
+export const changeIncoming = () => request.get('/teacherchange/incoming')
+export const changeAudit = (id, data) => request.post(`/teacherchange/${id}/audit`, data)
 
 // 班级
 export const classList = () => request.get('/class/list')

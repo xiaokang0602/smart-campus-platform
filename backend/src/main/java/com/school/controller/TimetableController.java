@@ -82,6 +82,7 @@ public class TimetableController {
             m.put("period", t.getPeriod());
             m.put("subject", t.getSubject());
             m.put("room", t.getRoom());
+            m.put("teacherId", t.getTeacherId());
             ClassInfo c = classInfoMapper.selectById(t.getClassId());
             m.put("className", c == null ? "" : c.getClassName());
             if (t.getTeacherId() != null) {

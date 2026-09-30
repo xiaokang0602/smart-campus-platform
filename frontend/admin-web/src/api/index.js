@@ -47,6 +47,10 @@ export const deleteAward = (awardId) => request.delete(`/student/award/${awardId
 export const changePending = () => request.get('/teacherchange/pending')
 export const changeAudit = (id, data) => request.post(`/teacherchange/${id}/audit`, data)
 
+// 课表
+export const timetableByClass = (classId) => request.get(`/timetable/class/${classId}`)
+export const timetableSave = (data) => request.post('/timetable/save', data)
+
 // 题库
 export const questionList = (params) => request.get('/question/list', { params })
 export const questionUpdate = (data) => request.put('/question/update', data)

@@ -13,7 +13,7 @@
         </router-link>
       </nav>
       <div style="padding:16px 22px; border-top:1px solid rgba(255,255,255,.08); font-size:12px; color:#8a96ad;">
-        青蓝初级中学
+        第一高级中学
       </div>
     </aside>
 
@@ -64,6 +64,8 @@ const avatarText = computed(() => (user.value.realName || '师').slice(0, 1))
 const baseMenus = [
   { path: '/dashboard', title: '首页', icon: 'HomeFilled' },
   { path: '/students', title: '班级学生', icon: 'User' },
+  { path: '/timetable', title: '我的课表', icon: 'Calendar' },
+  { path: '/teacherchange', title: '调课', icon: 'Switch' },
   { path: '/reps', title: '课代表管理', icon: 'Avatar' },
   { path: '/questionbank', title: '校本题库', icon: 'Collection' },
   { path: '/papercreate', title: '组卷发布', icon: 'DocumentAdd' },
@@ -74,8 +76,7 @@ const baseMenus = [
   { path: '/publish', title: '发布通知', icon: 'Promotion' }
 ]
 const headMenus = [
-  { path: '/awards', title: '评奖评优', icon: 'Medal' },
-  { path: '/teacherchange', title: '任课更换申请', icon: 'Switch' }
+  { path: '/awards', title: '评奖评优', icon: 'Medal' }
 ]
 const menus = computed(() => user.value.isHeadTeacher ? [...baseMenus, ...headMenus] : baseMenus)
 

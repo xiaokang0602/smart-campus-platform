@@ -14,6 +14,7 @@ const routes = [
       { path: 'users', component: () => import('../views/UserManage.vue'), meta: { title: '账号管理' } },
       { path: 'classes', component: () => import('../views/ClassManage.vue'), meta: { title: '班级管理' } },
       { path: 'teacher-job', component: () => import('../views/TeacherJobManage.vue'), meta: { title: '教师任职' } },
+      { path: 'timetable', component: () => import('../views/TimetableManage.vue'), meta: { title: '课表设置' } },
       { path: 'students', component: () => import('../views/StudentList.vue'), meta: { title: '学生总览' } },
       { path: 'teacher-apply', component: () => import('../views/TeacherApplyAudit.vue'), meta: { title: '任课更换审核' } },
       { path: 'questions', component: () => import('../views/QuestionManage.vue'), meta: { title: '题库管理' } },

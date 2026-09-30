@@ -57,6 +57,16 @@ public class TeacherChangeController {
         return Result.ok(list.stream().map(this::row).collect(Collectors.toList()));
     }
 
+    /** 我收到的调课请求（需要对方老师同意） */
+    @GetMapping("/incoming")
+    public Result<List<Map<String, Object>>> incoming() {
+        List<TeacherChangeApply> list = applyMapper.selectList(new LambdaQueryWrapper<TeacherChangeApply>()
+                .eq(TeacherChangeApply::getNewTeacherId, UserContext.userId())
+                .eq(TeacherChangeApply::getAuditStatus, 0)
+                .orderByDesc(TeacherChangeApply::getId));
+        return Result.ok(list.stream().map(this::row).collect(Collectors.toList()));
+    }
+
     @PostMapping("/{id}/audit")
     @OpLog(module = "teacher_change", action = "APPROVE", targetType = "teacher_change_apply")
     public Result<Void> audit(@PathVariable Long id, @RequestBody Map<String, Object> body) {
