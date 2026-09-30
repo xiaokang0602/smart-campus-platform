@@ -10,3 +10,21 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Java / Maven
+backend/target/
+target/
+*.class
+
+# Node
+node_modules/
+dist/
+*.local
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Logs
+*.log

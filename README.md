@@ -174,17 +174,6 @@ npm run dev
 4. **Nginx**：反向代理后端接口；
 5. **AI 能力**：后端通过 HTTPS 调用火山方舟（Ark）OpenAPI，接入模型 `Doubao-Seed-2.1-pro`，相关配置位于 `application.yml`。
 
-```yaml
-ark:
-  base-url: https://ark.cn-beijing.volces.com/api/v3
-  endpoint-id: <your-endpoint-id>
-  api-key: <your-api-key>
-  model: Doubao-Seed-2.1-pro
-  timeout: 30000
-  max-retries: 2
-  temperature: 0.7
-```
-
 ## 非功能性需求
 
 - **性能**：多人同时在线答题，Redis 缓存降低 MySQL 高并发压力；
