@@ -61,9 +61,9 @@ public class SeedDataInitializer implements ApplicationRunner {
     }
 
     private void seed() {
-        // 学校
+        // 学校（高中）
         School school = new School();
-        school.setSchoolName("第一高级初中");
+        school.setSchoolName("第一高级中学");
         school.setAddress("北京市海淀区学府路 1 号");
         schoolMapper.insert(school);
         Long schoolId = school.getId();
@@ -72,15 +72,20 @@ public class SeedDataInitializer implements ApplicationRunner {
         user("admin", superAdminPassword, "平台超级管理员", 4, 1, 0L);
         user("schooladmin", defaultPassword, "李明辉", 4, 2, schoolId);
 
-        // 教师（两位班主任 + 两位任课教师）
+        // 教师（两位班主任 + 七位任课教师）
         User tMath = user("wangjianguo", defaultPassword, "王建国", 3, 0, schoolId);
         User tChinese = user("lixiulan", defaultPassword, "李秀兰", 3, 0, schoolId);
         User tEnglish = user("liuyang", defaultPassword, "刘洋", 2, 0, schoolId);
         User tPhysics = user("chenming", defaultPassword, "陈明", 2, 0, schoolId);
+        User tPolitics = user("zhaoguoqiang", defaultPassword, "赵国强", 2, 0, schoolId);
+        User tHistory = user("sunlimei", defaultPassword, "孙丽梅", 2, 0, schoolId);
+        User tGeography = user("zhouhaitao", defaultPassword, "周海涛", 2, 0, schoolId);
+        User tChemistry = user("wuxueqin", defaultPassword, "吴雪琴", 2, 0, schoolId);
+        User tBiology = user("zhengyawen", defaultPassword, "郑雅文", 2, 0, schoolId);
 
-        // 两个班级
-        ClassInfo c1 = cls("初一(1)班", "初一", tMath.getId(), schoolId);
-        ClassInfo c2 = cls("初一(2)班", "初一", tChinese.getId(), schoolId);
+        // 两个班级（文科班 + 理科班）
+        ClassInfo c1 = cls("文科班", "高一", tChinese.getId(), schoolId);
+        ClassInfo c2 = cls("理科班", "高一", tMath.getId(), schoolId);
         ClassInfo[] classes = {c1, c2};
 
         // 学生（每班 20 人，共 40 人）
@@ -103,42 +108,52 @@ public class SeedDataInitializer implements ApplicationRunner {
                 st.setStudentNo(String.format("2026%02d%02d", ci + 1, s + 1));
                 st.setDuty(s < duties.length ? duties[s] : "无");
                 st.setGender(i % 2 == 0 ? "男" : "女");
-                st.setBirthday(LocalDate.of(2013, (i % 12) + 1, (i % 27) + 1));
+                st.setBirthday(LocalDate.of(2010, (i % 12) + 1, (i % 27) + 1));
                 st.setArchiveNote("");
                 studentMapper.insert(st);
             }
         }
 
         // 教师任职
-        job(tMath.getId(), c1.getId(), "数学", 1);
-        job(tMath.getId(), c2.getId(), "数学", 0);
-        job(tChinese.getId(), c2.getId(), "语文", 1);
-        job(tChinese.getId(), c1.getId(), "语文", 0);
+        job(tMath.getId(), c2.getId(), "数学", 1);   // 王建国：理科班班主任
+        job(tMath.getId(), c1.getId(), "数学", 0);
+        job(tChinese.getId(), c1.getId(), "语文", 1); // 李秀兰：文科班班主任
+        job(tChinese.getId(), c2.getId(), "语文", 0);
         job(tEnglish.getId(), c1.getId(), "英语", 0);
         job(tEnglish.getId(), c2.getId(), "英语", 0);
-        job(tPhysics.getId(), c1.getId(), "物理", 0);
         job(tPhysics.getId(), c2.getId(), "物理", 0);
+        job(tPolitics.getId(), c1.getId(), "政治", 0);
+        job(tHistory.getId(), c1.getId(), "历史", 0);
+        job(tGeography.getId(), c1.getId(), "地理", 0);
+        job(tChemistry.getId(), c2.getId(), "化学", 0);
+        job(tBiology.getId(), c2.getId(), "生物", 0);
 
-        // 课表（两个班，周一~周五 每天 6 节）
+        // 课表（两个班，周一~周五 每天 6 节；文科班政史地、理科班物化生）
         Map<String, Long> subjectTeacher = new LinkedHashMap<>();
         subjectTeacher.put("语文", tChinese.getId());
         subjectTeacher.put("数学", tMath.getId());
         subjectTeacher.put("英语", tEnglish.getId());
+        subjectTeacher.put("政治", tPolitics.getId());
+        subjectTeacher.put("历史", tHistory.getId());
+        subjectTeacher.put("地理", tGeography.getId());
         subjectTeacher.put("物理", tPhysics.getId());
-        subjectTeacher.put("历史", tMath.getId());
-        subjectTeacher.put("道德与法治", tChinese.getId());
-        String[] subjects = {"语文", "数学", "英语", "物理", "历史", "道德与法治"};
-        for (ClassInfo c : classes) {
+        subjectTeacher.put("化学", tChemistry.getId());
+        subjectTeacher.put("生物", tBiology.getId());
+        String[] artsSubjects = {"语文", "数学", "英语", "政治", "历史", "地理"};
+        String[] sciSubjects = {"语文", "数学", "英语", "物理", "化学", "生物"};
+        String[][] subjectPlan = {artsSubjects, sciSubjects};
+        for (int ci = 0; ci < classes.length; ci++) {
+            String[] subjects = subjectPlan[ci];
             for (int w = 0; w < 5; w++) {
                 for (int p = 0; p < 6; p++) {
                     String subject = subjects[(w + p) % subjects.length];
                     Timetable t = new Timetable();
-                    t.setClassId(c.getId());
+                    t.setClassId(classes[ci].getId());
                     t.setWeek(w + 1);
                     t.setPeriod(p + 1);
                     t.setSubject(subject);
                     t.setTeacherId(subjectTeacher.get(subject));
-                    t.setRoom("教学楼" + c.getId() + "层" + (w + 1) + "0" + (p + 1));
+                    t.setRoom("教学楼" + classes[ci].getId() + "层" + (w + 1) + "0" + (p + 1));
                     timetableMapper.insert(t);
                 }
             }
