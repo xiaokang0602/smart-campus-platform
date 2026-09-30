@@ -128,7 +128,7 @@ public class SeedDataInitializer implements ApplicationRunner {
         job(tChemistry.getId(), c2.getId(), "化学", 0);
         job(tBiology.getId(), c2.getId(), "生物", 0);
 
-        // 课表（两个班，周一~周五 每天 6 节；文科班政史地、理科班物化生）
+        // 课表（两个班，周一~周五 每天 7 节：上午 4 节 + 下午 3 节；文科班政史地、理科班物化生）
         Map<String, Long> subjectTeacher = new LinkedHashMap<>();
         subjectTeacher.put("语文", tChinese.getId());
         subjectTeacher.put("数学", tMath.getId());
@@ -145,7 +145,7 @@ public class SeedDataInitializer implements ApplicationRunner {
         for (int ci = 0; ci < classes.length; ci++) {
             String[] subjects = subjectPlan[ci];
             for (int w = 0; w < 5; w++) {
-                for (int p = 0; p < 6; p++) {
+                for (int p = 0; p < 7; p++) {
                     String subject = subjects[(w + p) % subjects.length];
                     Timetable t = new Timetable();
                     t.setClassId(classes[ci].getId());
