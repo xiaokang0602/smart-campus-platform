@@ -22,7 +22,7 @@
 
     <div class="card">
       <div class="card-title">我的申请记录</div>
-      <el-table :data="myReps" stripe>
+      <el-table :data="myRepsList" stripe>
         <el-table-column prop="studentName" label="学生" width="120" />
         <el-table-column prop="subject" label="科目" width="120" />
         <el-table-column label="状态" width="140">
@@ -58,7 +58,7 @@ import { studentList, myReps, applyRep, pendingReps, auditRep } from '../api'
 
 const user = JSON.parse(localStorage.getItem('user') || '{}')
 const students = ref([])
-const myReps = ref([])
+const myRepsList = ref([])
 const pending = ref([])
 const apply = ref({ studentId: null, subject: '' })
 
@@ -82,7 +82,7 @@ async function audit(row, status) {
 }
 
 async function load() {
-  myReps.value = await myReps()
+  myRepsList.value = await myReps()
   if (user.isHeadTeacher) {
     pending.value = await pendingReps()
   }
