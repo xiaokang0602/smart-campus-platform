@@ -74,7 +74,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { questionList, questionUpdate, questionDelete } from '../api'
 
-const subjects = ['语文', '数学', '英语', '道德与法治', '历史', '地理', '物理', '化学', '生物']
+const subjects = ['语文', '数学', '英语', '物理', '化学', '生物', '政治', '历史', '地理']
 const typeText = ['', '单选题', '多选题', '判断题', '填空题', '简答题']
 const rows = ref([])
 const total = ref(0)

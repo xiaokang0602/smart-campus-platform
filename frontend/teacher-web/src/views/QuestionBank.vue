@@ -17,7 +17,7 @@
         </el-form-item>
         <el-form-item label="年级">
           <el-select v-model="filter.grade" clearable placeholder="全部" style="width:110px" @change="load">
-            <el-option v-for="g in ['初一','初二','初三']" :key="g" :value="g" :label="g" />
+            <el-option v-for="g in ['高一','高二','高三']" :key="g" :value="g" :label="g" />
           </el-select>
         </el-form-item>
         <el-form-item label="题型">
@@ -62,7 +62,7 @@
     <el-dialog v-model="addVisible" title="手动录题" width="640px">
       <el-form label-width="90px">
         <el-form-item label="科目"><el-select v-model="addForm.subject" style="width:100%"><el-option v-for="s in subjects" :key="s" :value="s" :label="s" /></el-select></el-form-item>
-        <el-form-item label="年级"><el-select v-model="addForm.grade" style="width:100%"><el-option v-for="g in ['初一','初二','初三']" :key="g" :value="g" :label="g" /></el-select></el-form-item>
+        <el-form-item label="年级"><el-select v-model="addForm.grade" style="width:100%"><el-option v-for="g in ['高一','高二','高三']" :key="g" :value="g" :label="g" /></el-select></el-form-item>
         <el-form-item label="题型"><el-select v-model="addForm.questionType" style="width:100%"><el-option v-for="(t,i) in types" :key="i" :value="i" :label="t" /></el-select></el-form-item>
         <el-form-item label="题干"><el-input v-model="addForm.title" type="textarea" :rows="3" /></el-form-item>
         <el-form-item label="选项" v-if="addForm.questionType === 1 || addForm.questionType === 2">
@@ -83,7 +83,7 @@
     <el-dialog v-model="aiVisible" title="AI 批量出题" width="760px">
       <el-form :inline="true">
         <el-form-item label="科目"><el-select v-model="aiForm.subject" style="width:130px"><el-option v-for="s in subjects" :key="s" :value="s" :label="s" /></el-select></el-form-item>
-        <el-form-item label="年级"><el-select v-model="aiForm.grade" style="width:110px"><el-option v-for="g in ['初一','初二','初三']" :key="g" :value="g" :label="g" /></el-select></el-form-item>
+        <el-form-item label="年级"><el-select v-model="aiForm.grade" style="width:110px"><el-option v-for="g in ['高一','高二','高三']" :key="g" :value="g" :label="g" /></el-select></el-form-item>
         <el-form-item label="题型"><el-select v-model="aiForm.questionType" style="width:120px"><el-option v-for="(t,i) in types" :key="i" :value="i" :label="t" /></el-select></el-form-item>
         <el-form-item label="知识点"><el-input v-model="aiForm.knowledgePoint" style="width:140px" placeholder="如 一次函数" /></el-form-item>
         <el-form-item label="数量"><el-input-number v-model="aiForm.count" :min="1" :max="50" /></el-form-item>
@@ -110,7 +110,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { Plus, MagicStick } from '@element-plus/icons-vue'
 import { questionList, questionAdd, questionDelete, aiGenerate, adoptQuestions, discardQuestions } from '../api'
 
-const subjects = ['语文', '数学', '英语', '道德与法治', '历史', '地理', '物理', '化学', '生物']
+const subjects = ['语文', '数学', '英语', '物理', '化学', '生物', '政治', '历史', '地理']
 const types = ['', '单选题', '多选题', '判断题', '填空题', '简答题']
 
 const rows = ref([])
@@ -120,11 +120,11 @@ const pageSize = 20
 const filter = reactive({ subject: '', grade: '', questionType: null, keyword: '' })
 
 const addVisible = ref(false)
-const addForm = reactive({ subject: '数学', grade: '初二', questionType: 1, title: '', options: '', answer: '', analysis: '', knowledgePoint: '', difficulty: 3 })
+const addForm = reactive({ subject: '数学', grade: '高一', questionType: 1, title: '', options: '', answer: '', analysis: '', knowledgePoint: '', difficulty: 3 })
 
 const aiVisible = ref(false)
 const aiLoading = ref(false)
-const aiForm = reactive({ subject: '数学', grade: '初二', questionType: 1, knowledgePoint: '', count: 10 })
+const aiForm = reactive({ subject: '数学', grade: '高一', questionType: 1, knowledgePoint: '', count: 10 })
 const aiList = ref([])
 const aiSelected = ref([])
 
